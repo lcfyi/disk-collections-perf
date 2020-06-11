@@ -1,6 +1,5 @@
 package perftest.benchmarks.create;
 
-import java.io.IOException;
 import java.util.UUID;
 
 import org.rocksdb.RocksDBException;
@@ -26,8 +25,6 @@ public class RocksDBCreate extends RocksDBBase {
         try {
             db.put(Serializers.convertToBytes(key), Serializers.convertToBytes(new SerializedValue(key)));
         } catch (RocksDBException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }

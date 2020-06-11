@@ -15,6 +15,7 @@ public abstract class RocksDBBase extends Benchmark {
         options = new Options().setCreateIfMissing(true);
         try {
             db = RocksDB.open(options, filename);
+            options.close();
         } catch (RocksDBException e) {
             e.printStackTrace();
         }
