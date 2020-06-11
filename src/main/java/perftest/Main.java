@@ -12,6 +12,7 @@ public final class Main {
     private static String MAP_DB = TMP_DIR + "/mapdb.dat";
     private static String SERIALIZED_MAP_DB = TMP_DIR + "/smapdb.dat";
     private static String LEVEL_DB = TMP_DIR + "/leveldb.dat";
+    private static String ROCKS_DB = TMP_DIR + "/rocksdb.dat";
 
     public static void cleanTemporaryDatabases(File f) throws IOException {
         if (f.getName().contains(".gitkeep")) {
@@ -26,7 +27,7 @@ public final class Main {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void createTests() throws IOException {
         cleanTemporaryDatabases(new File(TMP_DIR));
         Benchmark mapBenchmark = new MapCreate();
         mapBenchmark.run();
@@ -43,5 +44,22 @@ public final class Main {
         Benchmark ldbBenchmark = new LevelDBCreate(LEVEL_DB);
         ldbBenchmark.run();
         System.out.println(ldbBenchmark);
+        Benchmark rdbBenchmark = new RocksDBCreate(ROCKS_DB);
+        rdbBenchmark.run();
+        System.out.println(rdbBenchmark);
+    }
+
+    public static void sequentialReadTests() throws IOException {
+        cleanTemporaryDatabases(new File(TMP_DIR));
+    }
+
+    public static void randomReadTests() throws IOException {
+        cleanTemporaryDatabases(new File(TMP_DIR));
+    }
+
+    public static void main(String[] args) throws IOException {
+        createTests();
+        sequentialReadTests();
+        randomReadTests();
     }
 }
