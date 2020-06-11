@@ -38,6 +38,8 @@ public class SerializedMapDBBenchmark extends Benchmark {
 
     @Override
     public void teardown() {
+        System.out.print("Map size: ");
+        System.out.println(map.size());
         db.close();
     }
 
@@ -58,6 +60,11 @@ public class SerializedMapDBBenchmark extends Benchmark {
             }
             return null;
         }
+
+        @Override
+        public int fixedSize() {
+            return -1;
+        }
     }
 
     static class ValueSerializer implements Serializer<SerializedValue>, Serializable {
@@ -76,6 +83,11 @@ public class SerializedMapDBBenchmark extends Benchmark {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        public int fixedSize() {
+            return -1;
         }
     }
 

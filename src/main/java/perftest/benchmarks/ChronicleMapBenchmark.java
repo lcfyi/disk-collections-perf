@@ -38,6 +38,8 @@ public class ChronicleMapBenchmark extends Benchmark {
 
     @Override
     public void teardown() {
+        System.out.print("Map size: ");
+        System.out.println(map.size());
         map.close();
     }
 

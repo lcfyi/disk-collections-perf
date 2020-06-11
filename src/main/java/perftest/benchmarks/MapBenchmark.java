@@ -21,5 +21,7 @@ public class MapBenchmark extends Benchmark {
 
     @Override
     public void teardown() {
+        System.out.print("Map size: ");
+        System.out.println(map.size());
     }
 }
