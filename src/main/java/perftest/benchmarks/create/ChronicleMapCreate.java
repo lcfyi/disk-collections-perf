@@ -1,27 +1,18 @@
-package perftest.benchmarks;
+package perftest.benchmarks.create;
 
 import java.util.UUID;
 
-import org.mapdb.DB;
-import org.mapdb.DBMaker;
-import org.mapdb.HTreeMap;
-
+import perftest.benchmarks.ChronicleMapBase;
 import perftest.serial.SerializedKey;
 import perftest.serial.SerializedValue;
 
-public class MapDBBenchmark extends Benchmark {
-    private HTreeMap map;
-    private DB db;
-    private String filename;
-
-    public MapDBBenchmark(String filename) {
-        this.filename = filename;
+public class ChronicleMapCreate extends ChronicleMapBase {
+    public ChronicleMapCreate(String filename) {
+        super(filename);
     }
 
     @Override
     public void init() {
-        db = DBMaker.fileDB(filename).fileMmapEnable().cleanerHackEnable().make();
-        map = db.hashMap("map").createOrOpen();
     }
 
     @Override
@@ -34,6 +25,7 @@ public class MapDBBenchmark extends Benchmark {
     public void teardown() {
         System.out.print("Map size: ");
         System.out.println(map.size());
-        db.close();
+        map.close();
     }
+
 }

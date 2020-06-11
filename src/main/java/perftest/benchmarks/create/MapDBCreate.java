@@ -1,13 +1,15 @@
-package perftest.benchmarks;
+package perftest.benchmarks.create;
 
 import java.util.UUID;
-import java.util.concurrent.*;
 
+import perftest.benchmarks.MapDBBase;
 import perftest.serial.SerializedKey;
 import perftest.serial.SerializedValue;
 
-public class MapBenchmark extends Benchmark {
-    private ConcurrentMap<SerializedKey, SerializedValue> map = new ConcurrentHashMap<>();
+public class MapDBCreate extends MapDBBase {
+    public MapDBCreate(String filename) {
+        super(filename);
+    }
 
     @Override
     public void init() {
@@ -23,5 +25,6 @@ public class MapBenchmark extends Benchmark {
     public void teardown() {
         System.out.print("Map size: ");
         System.out.println(map.size());
+        db.close();
     }
 }

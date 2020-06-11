@@ -3,7 +3,8 @@ package perftest;
 import java.io.File;
 import java.io.IOException;
 
-import perftest.benchmarks.*;
+import perftest.benchmarks.Benchmark;
+import perftest.benchmarks.create.*;
 
 public final class Main {
     private static String TMP_DIR = "tmp";
@@ -27,17 +28,20 @@ public final class Main {
 
     public static void main(String[] args) throws IOException {
         cleanTemporaryDatabases(new File(TMP_DIR));
-        Benchmark mapBenchmark = new MapBenchmark();
+        Benchmark mapBenchmark = new MapCreate();
         mapBenchmark.run();
         System.out.println(mapBenchmark);
-        Benchmark cmBenchmark = new ChronicleMapBenchmark(CHRONICLE_DB);
+        Benchmark cmBenchmark = new ChronicleMapCreate(CHRONICLE_DB);
         cmBenchmark.run();
         System.out.println(cmBenchmark);
-        Benchmark mdbBenchmark = new MapDBBenchmark(MAP_DB);
+        Benchmark mdbBenchmark = new MapDBCreate(MAP_DB);
         mdbBenchmark.run();
         System.out.println(mdbBenchmark);
-        Benchmark smdbBenchmark = new SerializedMapDBBenchmark(SERIALIZED_MAP_DB);
+        Benchmark smdbBenchmark = new SerializedMapDBCreate(SERIALIZED_MAP_DB);
         smdbBenchmark.run();
         System.out.println(smdbBenchmark);
+        Benchmark ldbBenchmark = new LevelDBCreate(LEVEL_DB);
+        ldbBenchmark.run();
+        System.out.println(ldbBenchmark);
     }
 }

@@ -2,7 +2,6 @@ package perftest.benchmarks;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.UUID;
 
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
@@ -15,32 +14,15 @@ import perftest.serial.SerializedKey;
 import perftest.serial.SerializedValue;
 import perftest.serial.Serializers;
 
-public class SerializedMapDBBenchmark extends Benchmark {
-    private HTreeMap<SerializedKey, SerializedValue> map;
-    private DB db;
-    private String filename;
+public abstract class SerializedMapDBBase extends Benchmark {
+    protected HTreeMap<SerializedKey, SerializedValue> map;
+    protected DB db;
+    protected String filename;
 
-    public SerializedMapDBBenchmark(String filename) {
+    public SerializedMapDBBase(String filename) {
         this.filename = filename;
-    }
-
-    @Override
-    public void init() {
-        db = DBMaker.fileDB(filename).fileMmapEnable().cleanerHackEnable().make();
+        db = DBMaker.fileDB(this.filename).fileMmapEnable().cleanerHackEnable().make();
         map = db.hashMap("map").keySerializer(new KeySerializer()).valueSerializer(new ValueSerializer()).createOrOpen();
-    }
-
-    @Override
-    public void work() {
-        SerializedKey key = new SerializedKey(UUID.randomUUID().toString(), UUID.randomUUID().toString());
-        map.put(key, new SerializedValue(key));
-    }
-
-    @Override
-    public void teardown() {
-        System.out.print("Map size: ");
-        System.out.println(map.size());
-        db.close();
     }
 
     static class KeySerializer implements Serializer<SerializedKey>, Serializable {

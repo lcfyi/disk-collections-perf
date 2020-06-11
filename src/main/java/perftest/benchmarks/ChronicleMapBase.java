@@ -9,18 +9,14 @@ import net.openhft.chronicle.map.ChronicleMapBuilder;
 import perftest.serial.SerializedKey;
 import perftest.serial.SerializedValue;
 
-public class ChronicleMapBenchmark extends Benchmark {
-    private ChronicleMap<SerializedKey, SerializedValue> map;
-    private String filename;
+public abstract class ChronicleMapBase extends Benchmark {
+    protected ChronicleMap<SerializedKey, SerializedValue> map;
+    protected String filename;
 
-    public ChronicleMapBenchmark(String filename) {
+    public ChronicleMapBase(String filename) {
         this.filename = filename;
-    }
-
-    @Override
-    public void init() {
         try {
-            map = ChronicleMapBuilder.of(SerializedKey.class, SerializedValue.class).name(filename)
+            map = ChronicleMapBuilder.of(SerializedKey.class, SerializedValue.class).name(this.filename)
                     .averageKey(new SerializedKey(UUID.randomUUID().toString(), UUID.randomUUID().toString()))
                     .averageValue(new SerializedValue(
                             new SerializedKey(UUID.randomUUID().toString(), UUID.randomUUID().toString())))
@@ -29,18 +25,4 @@ public class ChronicleMapBenchmark extends Benchmark {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void work() {
-        SerializedKey key = new SerializedKey(UUID.randomUUID().toString(), UUID.randomUUID().toString());
-        map.put(key, new SerializedValue(key));
-    }
-
-    @Override
-    public void teardown() {
-        System.out.print("Map size: ");
-        System.out.println(map.size());
-        map.close();
-    }
-
 }

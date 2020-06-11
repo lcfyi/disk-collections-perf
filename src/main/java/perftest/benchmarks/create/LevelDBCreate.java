@@ -1,20 +1,24 @@
-package perftest.benchmarks;
+package perftest.benchmarks.create;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import org.iq80.leveldb.DB;
 import org.iq80.leveldb.Options;
+
+import perftest.benchmarks.Benchmark;
+import perftest.benchmarks.LevelDBBase;
+import perftest.serial.SerializedKey;
+import perftest.serial.SerializedValue;
+import perftest.serial.Serializers;
+
 import static org.fusesource.leveldbjni.JniDBFactory.*;
 
-public class LevelDBBenchmark extends Benchmark {
+public class LevelDBCreate extends LevelDBBase {
 
-    private Options options = new Options();
-    private DB db;
-    public String filename;
-
-    public LevelDBBenchmark(String filename) {
-        this.filename = filename;
+    public LevelDBCreate(String filename) {
+        super(filename);
     }
 
     // public static void test() {
@@ -32,27 +36,24 @@ public class LevelDBBenchmark extends Benchmark {
     // }
     @Override
     public void init() {
-        try {
-            options.createIfMissing(true);
-            db = factory.open(new File(this.filename), options);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void work() {
-        // try {
-        // // db.put(Serializer.convertToBytes())
-        // } catch (IOException e) {
-        // System.out.println(e);
-        // }
+        try {
+            SerializedKey key = new SerializedKey(UUID.randomUUID().toString(), UUID.randomUUID().toString());
+            db.put(Serializers.convertToBytes(key), Serializers.convertToBytes(new SerializedValue(key)));
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 
 
     @Override
     public void teardown() {
         try {
+            String stats = db.getProperty("leveldb.stats");
+            System.out.println(stats);
             db.close();
         } catch (IOException e) {
             e.printStackTrace();
