@@ -2,6 +2,7 @@ package perftest;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 
 import perftest.benchmarks.Benchmark;
 import perftest.benchmarks.create.*;
@@ -125,11 +126,17 @@ public final class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println("----------------------------------------  create  ----------------------------------------");
-        createTests();
-        System.out.println("---------------------------------------- seq read ----------------------------------------");
-        sequentialReadTests();
-        // System.out.println("------------- rdm read ----------------");
-        // randomReadTests();
+        List<Long> sets = Arrays.asList(1000L, 10000L, 500000L, 1000000L, 2000000L, 5000000L, 10000000L);
+        for (Long i : sets) {
+            Benchmark.RUN_ITERATIONS = i;
+            System.out.println("------------------------------------------------------------------------------------------");
+            System.out.printf("                                     %d%n                                             \n", i);
+            System.out.println("------------------------------------------------------------------------------------------");
+            System.out.println("----------------------------------------  create  ----------------------------------------");
+            createTests();
+            System.out.println("---------------------------------------- seq read ----------------------------------------");
+            sequentialReadTests();
+
+        }
     }
 }
