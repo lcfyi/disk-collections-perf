@@ -3,7 +3,7 @@ package perftest.benchmarks;
 import java.util.*;
 
 public abstract class Benchmark {
-    public static final long RUN_ITERATIONS = 1_000_000;
+    public static final long RUN_ITERATIONS = 1_000;
     private final List<Long> runtimes = new ArrayList<>();
     private long duration;
 

@@ -35,6 +35,24 @@ public final class Main {
         }
     }
 
+    public static void getFolderSizeWrapper(String filename) throws IOException {
+        System.out.print("Size: ");
+        System.out.print(getFolderSize(new File(filename)));
+        System.out.println("B");
+    }
+
+    public static long getFolderSize(File f) throws IOException {
+        if (f.isDirectory()) {
+            long size = 0;
+            for (File c : f.listFiles()) {
+                size += getFolderSize(c);
+            }
+            return size;
+        } else {
+            return f.length();
+        }
+    }
+
     public static void createTests() throws IOException {
         cleanTemporaryDatabases(new File(TMP_DIR));
         Benchmark mapBenchmark = new MapCreate();
@@ -43,18 +61,23 @@ public final class Main {
         Benchmark cmBenchmark = new ChronicleMapCreate(CHRONICLE_DB);
         cmBenchmark.run();
         System.out.println(cmBenchmark);
+        getFolderSizeWrapper(CHRONICLE_DB);
         Benchmark mdbBenchmark = new MapDBCreate(MAP_DB);
         mdbBenchmark.run();
         System.out.println(mdbBenchmark);
+        getFolderSizeWrapper(MAP_DB);
         Benchmark smdbBenchmark = new SerializedMapDBCreate(SERIALIZED_MAP_DB);
         smdbBenchmark.run();
         System.out.println(smdbBenchmark);
+        getFolderSizeWrapper(SERIALIZED_MAP_DB);
         Benchmark ldbBenchmark = new LevelDBCreate(LEVEL_DB);
         ldbBenchmark.run();
         System.out.println(ldbBenchmark);
+        getFolderSizeWrapper(LEVEL_DB);
         Benchmark rdbBenchmark = new RocksDBCreate(ROCKS_DB);
         rdbBenchmark.run();
         System.out.println(rdbBenchmark);
+        getFolderSizeWrapper(ROCKS_DB);
     }
 
     public static void sequentialReadTests() throws IOException {
@@ -102,11 +125,11 @@ public final class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println("------------- create ----------------");
+        System.out.println("----------------------------------------  create  ----------------------------------------");
         createTests();
-        System.out.println("------------- seq read ----------------");
+        System.out.println("---------------------------------------- seq read ----------------------------------------");
         sequentialReadTests();
-        System.out.println("------------- rdm read ----------------");
-        randomReadTests();
+        // System.out.println("------------- rdm read ----------------");
+        // randomReadTests();
     }
 }
