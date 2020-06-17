@@ -6,7 +6,9 @@ import java.util.Objects;
 import com.googlecode.cqengine.ConcurrentIndexedCollection;
 import com.googlecode.cqengine.IndexedCollection;
 import com.googlecode.cqengine.attribute.SimpleAttribute;
+import com.googlecode.cqengine.persistence.composite.CompositePersistence;
 import com.googlecode.cqengine.persistence.disk.DiskPersistence;
+import com.googlecode.cqengine.persistence.onheap.OnHeapPersistence;
 import com.googlecode.cqengine.query.option.QueryOptions;
 
 import perftest.serial.*;
@@ -53,6 +55,9 @@ public abstract class CQEngineBase extends Benchmark {
 
     public CQEngineBase(String filename) {
         DiskPersistence<SerializedSet, String> persistence = DiskPersistence.onPrimaryKeyInFile(SerializedSet.SET_ID, new File(filename));
-        set = new ConcurrentIndexedCollection<SerializedSet>(persistence);
+        set = new ConcurrentIndexedCollection<SerializedSet>(CompositePersistence.of(
+            persistence,
+            OnHeapPersistence.onPrimaryKey(SerializedSet.SET_ID)
+        ));
     }
 }
