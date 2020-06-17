@@ -22,6 +22,12 @@
   <dependencies>
 
     <dependency>
+      <groupId>com.googlecode.cqengine</groupId>
+      <artifactId>cqengine</artifactId>
+      <version>3.5.0</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.rocksdb</groupId>
       <artifactId>rocksdbjni</artifactId>
       <version>6.6.4</version>

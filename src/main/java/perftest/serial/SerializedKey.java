@@ -3,7 +3,7 @@ package perftest.serial;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class SerializedKey implements Serializable {
+public class SerializedKey implements Serializable, Comparable<SerializedKey> {
     private static final long serialVersionUID = 1L;
     private String a;
     private String b;
@@ -37,5 +37,16 @@ public class SerializedKey implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(a, b);
+    }
+
+    @Override
+    public int compareTo(SerializedKey o) {
+        if (this == o) {
+            return 0;
+        } else if (this.hashCode() > o.hashCode()) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }

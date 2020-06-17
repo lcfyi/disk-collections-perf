@@ -6,13 +6,13 @@ import java.util.*;
 
 import perftest.benchmarks.Benchmark;
 import perftest.benchmarks.create.*;
-import perftest.benchmarks.randomread.*;
 import perftest.benchmarks.seqread.*;
 
 public final class Main {
     private static String TMP_DIR = "tmp";
     private static String CHRONICLE_DB = TMP_DIR + "/chronicle.dat";
     private static String SERIALIZED_MAP_DB = TMP_DIR + "/smapdb.dat";
+    private static String CQ_DB = TMP_DIR + "/cq.dat";
 
     public static void cleanTemporaryDatabases(File f) throws IOException {
         if (f.getName().contains(".gitkeep")) {
@@ -58,6 +58,10 @@ public final class Main {
         smdbBenchmark.run();
         System.out.println(smdbBenchmark);
         getFolderSizeWrapper(SERIALIZED_MAP_DB);
+        Benchmark cqBenchmark = new CQEngineCreate(CQ_DB);
+        cqBenchmark.run();
+        System.out.println(cqBenchmark);
+        getFolderSizeWrapper(CQ_DB);
     }
 
     public static void sequentialReadTests() throws IOException {
@@ -71,19 +75,9 @@ public final class Main {
         Benchmark smdbBenchmark = new SerializedMapDBSeqRead(SERIALIZED_MAP_DB);
         smdbBenchmark.run();
         System.out.println(smdbBenchmark);
-    }
-
-    public static void randomReadTests() throws IOException {
-        cleanTemporaryDatabases(new File(TMP_DIR));
-        Benchmark mapBenchmark = new MapRandomRead();
-        mapBenchmark.run();
-        System.out.println(mapBenchmark);
-        Benchmark cmBenchmark = new ChronicleMapRandomRead(CHRONICLE_DB);
-        cmBenchmark.run();
-        System.out.println(cmBenchmark);
-        Benchmark smdbBenchmark = new SerializedMapDBRandomRead(SERIALIZED_MAP_DB);
-        smdbBenchmark.run();
-        System.out.println(smdbBenchmark);
+        Benchmark cqBenchmark = new CQEngineSeqRead(CQ_DB);
+        cqBenchmark.run();
+        System.out.println(cqBenchmark);
     }
 
     public static void main(String[] args) throws IOException {
