@@ -2,10 +2,23 @@ package perftest.benchmarks;
 
 import java.util.*;
 
+import perftest.serial.*;
+
 public abstract class Benchmark {
     public static long RUN_ITERATIONS = 1_000;
     private final List<Long> runtimes = new ArrayList<>();
     private long duration;
+    private int counter = 0;
+
+    public Map<SerializedKey, SerializedValue> generateMap() {
+        Map<SerializedKey, SerializedValue> m = new HashMap<>();
+        for (int i = 0; i < counter; i++) {
+            SerializedKey k = new SerializedKey("a", Integer.toString(i));
+            m.put(k, new SerializedValue(k));
+        }
+        counter = (counter > 3) ? 0 : counter + 1;
+        return m;
+    }
 
     /**
      * Run the benchmark.

@@ -4,9 +4,8 @@ import java.util.UUID;
 
 import perftest.benchmarks.ChronicleMapBase;
 import perftest.serial.SerializedKey;
-import perftest.serial.SerializedValue;
 
-public class ChronicleMapCreate extends ChronicleMapBase {
+public class ChronicleMapCreate extends ChronicleMapBase {    
     public ChronicleMapCreate(String filename) {
         super(filename);
     }
@@ -18,7 +17,7 @@ public class ChronicleMapCreate extends ChronicleMapBase {
     @Override
     public void work() {
         SerializedKey key = new SerializedKey(UUID.randomUUID().toString(), UUID.randomUUID().toString());
-        map.put(key, new SerializedValue(key));
+        map.put(key, generateMap());
     }
 
     @Override

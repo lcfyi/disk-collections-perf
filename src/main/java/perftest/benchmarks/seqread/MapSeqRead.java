@@ -4,7 +4,6 @@ import java.util.*;
 
 import perftest.benchmarks.MapBase;
 import perftest.serial.SerializedKey;
-import perftest.serial.SerializedValue;
 
 public class MapSeqRead extends MapBase {
     List<SerializedKey> keys;
@@ -20,7 +19,7 @@ public class MapSeqRead extends MapBase {
         for (int i = 0; i < RUN_ITERATIONS; i++) {
             SerializedKey key = new SerializedKey(UUID.randomUUID().toString(), UUID.randomUUID().toString());
             keys.add(key);
-            map.put(key, new SerializedValue(key));
+            map.put(key, generateMap());
         }
     }
     

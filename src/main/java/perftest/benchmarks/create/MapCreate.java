@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import perftest.benchmarks.MapBase;
 import perftest.serial.SerializedKey;
-import perftest.serial.SerializedValue;
 
 public class MapCreate extends MapBase {
     @Override
@@ -14,7 +13,7 @@ public class MapCreate extends MapBase {
     @Override
     public void work() {
         SerializedKey key = new SerializedKey(UUID.randomUUID().toString(), UUID.randomUUID().toString());
-        map.put(key, new SerializedValue(key));
+        map.put(key, generateMap());
     }
 
     @Override
