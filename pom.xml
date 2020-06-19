@@ -22,6 +22,12 @@
   <dependencies>
 
     <dependency>
+      <groupId>org.openjdk.jol</groupId>
+      <artifactId>jol-core</artifactId>
+      <version>0.8</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.rocksdb</groupId>
       <artifactId>rocksdbjni</artifactId>
       <version>6.6.4</version>

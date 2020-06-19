@@ -2,6 +2,8 @@ package perftest.benchmarks.create;
 
 import java.util.UUID;
 
+import org.openjdk.jol.info.GraphLayout;
+
 import perftest.benchmarks.MapBase;
 import perftest.serial.SerializedKey;
 import perftest.serial.SerializedValue;
@@ -21,5 +23,7 @@ public class MapCreate extends MapBase {
     public void teardown() {
         System.out.print("Map size: ");
         System.out.println(map.size());
+        System.out.print("Footprint: ");
+        System.out.println(GraphLayout.parseInstance(map).toFootprint());
     }
 }
