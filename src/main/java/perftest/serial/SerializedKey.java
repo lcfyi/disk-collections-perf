@@ -44,7 +44,6 @@ public class SerializedKey implements Serializable {
 
     @JsonCreator
     public static SerializedKey fromString(@JsonProperty("key") final String key) {
-        System.out.println(key);
         String[] v = key.split("\\.");
         return new SerializedKey(v[0], v[1]);
     }

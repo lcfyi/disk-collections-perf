@@ -3,12 +3,12 @@ package perftest.benchmarks.create;
 import java.io.IOException;
 import java.util.UUID;
 
-import perftest.benchmarks.FileBase;
+import perftest.benchmarks.CompressedFileBase;
 import perftest.serial.SerializedKey;
 import perftest.serial.SerializedValue;
 
-public class FileCreate extends FileBase {
-    public FileCreate(String filename) {
+public class CompressedFileCreate extends CompressedFileBase {
+    public CompressedFileCreate(String filename) {
         super(filename);
     }
 

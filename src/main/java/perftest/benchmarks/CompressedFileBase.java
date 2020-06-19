@@ -7,17 +7,19 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-public abstract class FileBase extends Benchmark {
+import com.linkedin.migz.MiGzOutputStream;
+
+public abstract class CompressedFileBase extends Benchmark {
 
     protected String filename;
     protected BufferedWriter writer;
     protected OutputStream outputStream;
 
-    public FileBase(String filename) {
+    public CompressedFileBase(String filename) {
         this.filename = filename;
         try {
             outputStream = new FileOutputStream(new File(filename));
-            writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(new MiGzOutputStream(outputStream), "UTF-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }

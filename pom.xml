@@ -21,6 +21,14 @@
   </properties>
   <dependencies>
 
+  <!-- https://mvnrepository.com/artifact/com.linkedin.migz/migz -->
+    <dependency>
+      <groupId>com.linkedin.migz</groupId>
+      <artifactId>migz</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
+
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>

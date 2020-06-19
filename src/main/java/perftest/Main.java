@@ -8,6 +8,8 @@ import perftest.benchmarks.Benchmark;
 import perftest.benchmarks.create.*;
 import perftest.benchmarks.randomread.*;
 import perftest.benchmarks.seqread.ChronicleMapSeqRead;
+import perftest.benchmarks.seqread.CompressedFileSeqRead;
+import perftest.benchmarks.seqread.FileSeqRead;
 import perftest.benchmarks.seqread.LevelDBSeqRead;
 import perftest.benchmarks.seqread.MapDBSeqRead;
 import perftest.benchmarks.seqread.MapSeqRead;
@@ -23,6 +25,7 @@ public final class Main {
     private static String LEVEL_DB = TMP_DIR + "/leveldb.dat";
     private static String ROCKS_DB = TMP_DIR + "/rocksdb.dat";
     private static String FILE_NAME = TMP_DIR + "/file.dat";
+    private static String COMPRESSED_FILE_NAME = TMP_DIR + "/cfile.dat";
 
     public static void cleanTemporaryDatabases(File f) throws IOException {
         if (f.getName().contains(".gitkeep")) {
@@ -64,14 +67,18 @@ public final class Main {
         fileBenchmark.run();
         System.out.println(fileBenchmark);
         getFolderSizeWrapper(FILE_NAME);
-        // Benchmark cmBenchmark = new ChronicleMapCreate(CHRONICLE_DB);
-        // cmBenchmark.run();
-        // System.out.println(cmBenchmark);
-        // getFolderSizeWrapper(CHRONICLE_DB);
-        // Benchmark mdbBenchmark = new MapDBCreate(MAP_DB);
-        // mdbBenchmark.run();
-        // System.out.println(mdbBenchmark);
-        // getFolderSizeWrapper(MAP_DB);
+        Benchmark cfileBenchmark = new CompressedFileCreate(COMPRESSED_FILE_NAME);
+        cfileBenchmark.run();
+        System.out.println(cfileBenchmark);
+        getFolderSizeWrapper(COMPRESSED_FILE_NAME);
+        Benchmark cmBenchmark = new ChronicleMapCreate(CHRONICLE_DB);
+        cmBenchmark.run();
+        System.out.println(cmBenchmark);
+        getFolderSizeWrapper(CHRONICLE_DB);
+        Benchmark mdbBenchmark = new MapDBCreate(MAP_DB);
+        mdbBenchmark.run();
+        System.out.println(mdbBenchmark);
+        getFolderSizeWrapper(MAP_DB);
         // Benchmark smdbBenchmark = new SerializedMapDBCreate(SERIALIZED_MAP_DB);
         // smdbBenchmark.run();
         // System.out.println(smdbBenchmark);
@@ -91,21 +98,27 @@ public final class Main {
         Benchmark mapBenchmark = new MapSeqRead();
         mapBenchmark.run();
         System.out.println(mapBenchmark);
+        Benchmark fileBenchmark = new FileSeqRead(FILE_NAME);
+        fileBenchmark.run();
+        System.out.println(fileBenchmark);
+        Benchmark cfileBenchmark = new CompressedFileSeqRead(COMPRESSED_FILE_NAME);
+        cfileBenchmark.run();
+        System.out.println(cfileBenchmark);
         Benchmark cmBenchmark = new ChronicleMapSeqRead(CHRONICLE_DB);
         cmBenchmark.run();
         System.out.println(cmBenchmark);
         Benchmark mdbBenchmark = new MapDBSeqRead(MAP_DB);
         mdbBenchmark.run();
         System.out.println(mdbBenchmark);
-        Benchmark smdbBenchmark = new SerializedMapDBSeqRead(SERIALIZED_MAP_DB);
-        smdbBenchmark.run();
-        System.out.println(smdbBenchmark);
-        Benchmark ldbBenchmark = new LevelDBSeqRead(LEVEL_DB);
-        ldbBenchmark.run();
-        System.out.println(ldbBenchmark);
-        Benchmark rdbBenchmark = new RocksDBSeqRead(ROCKS_DB);
-        rdbBenchmark.run();
-        System.out.println(rdbBenchmark);
+        // Benchmark smdbBenchmark = new SerializedMapDBSeqRead(SERIALIZED_MAP_DB);
+        // smdbBenchmark.run();
+        // System.out.println(smdbBenchmark);
+        // Benchmark ldbBenchmark = new LevelDBSeqRead(LEVEL_DB);
+        // ldbBenchmark.run();
+        // System.out.println(ldbBenchmark);
+        // Benchmark rdbBenchmark = new RocksDBSeqRead(ROCKS_DB);
+        // rdbBenchmark.run();
+        // System.out.println(rdbBenchmark);
     }
 
     public static void randomReadTests() throws IOException {
@@ -139,8 +152,8 @@ public final class Main {
             System.out.println("------------------------------------------------------------------------------------------");
             System.out.println("----------------------------------------  create  ----------------------------------------");
             createTests();
-            // System.out.println("---------------------------------------- seq read ----------------------------------------");
-            // sequentialReadTests();
+            System.out.println("---------------------------------------- seq read ----------------------------------------");
+            sequentialReadTests();
         }
     }
 }
