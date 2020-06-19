@@ -2,7 +2,6 @@ package perftest.benchmarks;
 
 import java.util.concurrent.*;
 
-import perftest.benchmarks.Benchmark;
 import perftest.serial.SerializedKey;
 import perftest.serial.SerializedValue;
 

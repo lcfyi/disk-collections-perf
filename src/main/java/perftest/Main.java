@@ -22,6 +22,7 @@ public final class Main {
     private static String SERIALIZED_MAP_DB = TMP_DIR + "/smapdb.dat";
     private static String LEVEL_DB = TMP_DIR + "/leveldb.dat";
     private static String ROCKS_DB = TMP_DIR + "/rocksdb.dat";
+    private static String FILE_NAME = TMP_DIR + "/file.dat";
 
     public static void cleanTemporaryDatabases(File f) throws IOException {
         if (f.getName().contains(".gitkeep")) {
@@ -59,26 +60,30 @@ public final class Main {
         Benchmark mapBenchmark = new MapCreate();
         mapBenchmark.run();
         System.out.println(mapBenchmark);
-        Benchmark cmBenchmark = new ChronicleMapCreate(CHRONICLE_DB);
-        cmBenchmark.run();
-        System.out.println(cmBenchmark);
-        getFolderSizeWrapper(CHRONICLE_DB);
-        Benchmark mdbBenchmark = new MapDBCreate(MAP_DB);
-        mdbBenchmark.run();
-        System.out.println(mdbBenchmark);
-        getFolderSizeWrapper(MAP_DB);
-        Benchmark smdbBenchmark = new SerializedMapDBCreate(SERIALIZED_MAP_DB);
-        smdbBenchmark.run();
-        System.out.println(smdbBenchmark);
-        getFolderSizeWrapper(SERIALIZED_MAP_DB);
-        Benchmark ldbBenchmark = new LevelDBCreate(LEVEL_DB);
-        ldbBenchmark.run();
-        System.out.println(ldbBenchmark);
-        getFolderSizeWrapper(LEVEL_DB);
-        Benchmark rdbBenchmark = new RocksDBCreate(ROCKS_DB);
-        rdbBenchmark.run();
-        System.out.println(rdbBenchmark);
-        getFolderSizeWrapper(ROCKS_DB);
+        Benchmark fileBenchmark = new FileCreate(FILE_NAME);
+        fileBenchmark.run();
+        System.out.println(fileBenchmark);
+        getFolderSizeWrapper(FILE_NAME);
+        // Benchmark cmBenchmark = new ChronicleMapCreate(CHRONICLE_DB);
+        // cmBenchmark.run();
+        // System.out.println(cmBenchmark);
+        // getFolderSizeWrapper(CHRONICLE_DB);
+        // Benchmark mdbBenchmark = new MapDBCreate(MAP_DB);
+        // mdbBenchmark.run();
+        // System.out.println(mdbBenchmark);
+        // getFolderSizeWrapper(MAP_DB);
+        // Benchmark smdbBenchmark = new SerializedMapDBCreate(SERIALIZED_MAP_DB);
+        // smdbBenchmark.run();
+        // System.out.println(smdbBenchmark);
+        // getFolderSizeWrapper(SERIALIZED_MAP_DB);
+        // Benchmark ldbBenchmark = new LevelDBCreate(LEVEL_DB);
+        // ldbBenchmark.run();
+        // System.out.println(ldbBenchmark);
+        // getFolderSizeWrapper(LEVEL_DB);
+        // Benchmark rdbBenchmark = new RocksDBCreate(ROCKS_DB);
+        // rdbBenchmark.run();
+        // System.out.println(rdbBenchmark);
+        // getFolderSizeWrapper(ROCKS_DB);
     }
 
     public static void sequentialReadTests() throws IOException {
@@ -134,9 +139,8 @@ public final class Main {
             System.out.println("------------------------------------------------------------------------------------------");
             System.out.println("----------------------------------------  create  ----------------------------------------");
             createTests();
-            System.out.println("---------------------------------------- seq read ----------------------------------------");
-            sequentialReadTests();
-
+            // System.out.println("---------------------------------------- seq read ----------------------------------------");
+            // sequentialReadTests();
         }
     }
 }

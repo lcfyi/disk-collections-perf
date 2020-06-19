@@ -3,6 +3,9 @@ package perftest.serial;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SerializedKey implements Serializable {
     private static final long serialVersionUID = 1L;
     private String a;
@@ -37,5 +40,12 @@ public class SerializedKey implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(a, b);
+    }
+
+    @JsonCreator
+    public static SerializedKey fromString(@JsonProperty("key") final String key) {
+        System.out.println(key);
+        String[] v = key.split("\\.");
+        return new SerializedKey(v[0], v[1]);
     }
 }
